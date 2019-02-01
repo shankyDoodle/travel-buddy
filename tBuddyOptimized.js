@@ -38,17 +38,23 @@ function longestCommonPath(aTravelerPath, aBuddyPath) {
   return aPaths[iTrLen][iBudLen];
 }
 
+function cloneMasterData(src) {
+  return JSON.parse(JSON.stringify(src));
+}
+
 function findBuddyOptimized(sTraveler) {
   // let start = now();
 
-  let aTravelerCities = oMasterData[sTraveler];
-  delete oMasterData[sTraveler];
+  let oClonedMasterData = cloneMasterData(oMasterData);
+
+  let aTravelerCities = oClonedMasterData[sTraveler];
+  delete oClonedMasterData[sTraveler];
 
   let iMax = -1;
   let sBuddy = "none";
 
-  for(let sKey in oMasterData){
-    let iLCP = longestCommonPath(aTravelerCities, oMasterData[sKey]);
+  for(let sKey in oClonedMasterData){
+    let iLCP = longestCommonPath(aTravelerCities, oClonedMasterData[sKey]);
     if (iMax < iLCP) {
       iMax = iLCP;
       sBuddy = sKey;
@@ -62,5 +68,5 @@ function findBuddyOptimized(sTraveler) {
 }
 
 
-let sBuddy = findBuddyOptimized("Sam");
-console.log(sBuddy);
+// let sBuddy = findBuddyOptimized("Sam");
+// console.log(sBuddy);
